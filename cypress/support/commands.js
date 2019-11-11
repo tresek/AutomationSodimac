@@ -23,3 +23,37 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+
+/*let LOCAL_STORAGE_MEMORY = {};
+
+Cypress.Commands.add("saveLocalStorageCache", () => {
+  Object.keys(localStorage).forEach(key => {
+    LOCAL_STORAGE_MEMORY[key] = localStorage[key];
+  });
+});
+
+Cypress.Commands.add("restoreLocalStorageCache", () => {
+  Object.keys(LOCAL_STORAGE_MEMORY).forEach(key => {
+    localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
+  });
+});*/
+
+
+let LOCAL_STORAGE_MEMORY = {};
+
+Cypress.Commands.add("saveLocalStorageCache", () => {
+    Object.keys(localStorage).forEach(key => {
+        cy.log(`saving key => ${key}`)
+        cy.log(`with value => ${localStorage[key]}`)
+      LOCAL_STORAGE_MEMORY[key] = localStorage[key];
+    });
+  });
+
+Cypress.Commands.add("restoreLocalStorageCache", () => {
+    Object.keys(LOCAL_STORAGE_MEMORY).forEach(key => {
+        cy.log(`restoring key => ${key}`)
+        cy.log(`with value => ${LOCAL_STORAGE_MEMORY[key]}`)
+      localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
+    });
+});

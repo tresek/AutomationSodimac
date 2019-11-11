@@ -1,5 +1,6 @@
 'use strict'
 
+/*
 describe ('Flujo MicroPlay-1', () => {
     before(() =>{ 
         cy.fixture('dataEntrada1.csv').as('ingresoProducto1')
@@ -54,11 +55,11 @@ describe ('Flujo MicroPlay-1', () => {
         expect(text).to.equal('Hello World') // true
     })
 
-        /*Nombre del producto buscado
-        Precio Web
-        Precio Tienda
-        SKU	del	producto
-        */
+        //Nombre del producto buscado
+        //Precio Web
+        //Precio Tienda
+        //SKU	del	producto
+        
         
     })
 
@@ -68,66 +69,79 @@ describe ('Flujo MicroPlay-1', () => {
     })
 
 
-})
-describe ('Flujo MicroPlay-2', () => {
-    before(() =>{ 
-        //cy.fixture('dataEntrada2.csv').as('ingresoProducto2')
+})*/
+
+describe('Flujo MicroPlay-2', () => {
+    const json = ['Disco Duro 1TB Canvio Advance Rojo Toshiba', 'Death Stranding PS4', 'Selfie Stick Tripode AF15 Negro Huawei'];
+
+    /*before(() => {
+        //    cy.fixture('dataEntrada1.csv').as('ingresoProducto1')
         cy.visit('https://www.microplay.cl/')
-        cy.clearCookies()
         cy.wait(2000)
         cy.screenshot('inicio-Al-Sitio')
-    })
+    });*/
 
-    it ('Seleccion de Producto', () =>{
-        cy.get('@ingresoProducto').then((ingresoProducto) => {
-            cy.get('#ip-buscar').type(`${ingresoProducto}{enter}`)
+    json.forEach(producto => {
+        it('Seleccion de Producto', () => {
+            cy.visit('https://www.microplay.cl/')
             cy.wait(2000)
-            cy.get('#ip-buscar').clear()
+            cy.screenshot('inicio-Al-Sitio')
+            cy.log(producto);
+            cy.get('#ip-buscar').type(`${producto}{enter}`);
+            cy.wait(2000);
+            cy.get('#ip-buscar').clear();
+            cy.wait(2000);
+            cy.get('.btn-titulo > p').click();
+        });
+
+
+        it('Agregar producto al Carro de Compra', () => {
+            cy.restoreLocalStorageCache();
             cy.wait(2000)
-            cy.get('.btn-titulo > p').click()
-        //#### Leer archivo ###        
+            cy.screenshot('Detalle')
+            cy.get('.btn-agregar2').click()
+            //cy.wait(2000) 
+            cy.wait(8000)
+            cy.saveLocalStorageCache();
+            cy.screenshot('Agregar a Carro de Compra')
+            // aqui se debe validar el nombre y precio web, debe ser el mismo que estaba en el detalle  
+
         })
-               
-    
-    })
+        it('Verificar todos los Productos en el carro de Compra', () => {
+            //Verificar que se muestren todos los productos en el carro de compras
+        })
 
-    it('Agregar producto al Carro de Compra', () =>{
-        cy.wait(2000)
-        cy.screenshot('Detalle')
-        cy.get('.btn-agregar2').click()  
-        //cy.wait(2000) 
-        cy.wait(8000)
-        cy.screenshot('Agregar a Carro de Compra')
-        // aqui se debe validar el nombre y precio web, debe ser el mismo que estaba en el detalle  
-       
-    })
-    it('Verificar todos los Productos en el carro de Compra', () =>{
-        //Verificar que se muestren todos los productos en el carro de compras
-    })
+        it('Verificar total a Pagar', () => {
+            //Verificar que el Total a pagar corresponda a la suma de todos los productos en el carro de
+            //compras
+        })
 
-    it('Verificar total a Pagar', () =>{
-        //Verificar que el Total a pagar corresponda a la suma de todos los productos en el carro de
-        //compras
-    })
-
-    it('Verificar total a Pagar, al quitar productos', () => {
-        //Verificar que al quitar uno o varios de los productos (no todos) del carro de compras, su
-        //precio se descuente del Total a pagar
-    })
+        it('Verificar total a Pagar, al quitar productos', () => {
+            //Verificar que al quitar uno o varios de los productos (no todos) del carro de compras, su
+            //precio se descuente del Total a pagar
+        })
 
 
-    it ('Reporte', () =>{
-        /*El proceso de automatización debe generar un archivo de salida (csv, txt o xls) con la
-        siguiente información por cada uno de los productos:
-        Nombre del producto buscado
-        Precio Web
-        Precio Tienda
-        SKU del producto
-        */
-    })
+        it('Reporte', () => {
+            /*El proceso de automatización debe generar un archivo de salida (csv, txt o xls) con la
+            siguiente información por cada uno de los productos:
+            Nombre del producto buscado
+            Precio Web
+            Precio Tienda
+            SKU del producto
+            */
+        })
 
-    it('--FIN--', () =>{
+
+
+    });
+
+
+
+
+
+    it('--FIN--', () => {
 
     })
 
-})
+});
