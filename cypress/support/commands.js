@@ -37,23 +37,36 @@ Cypress.Commands.add("restoreLocalStorageCache", () => {
   Object.keys(LOCAL_STORAGE_MEMORY).forEach(key => {
     localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
   });
-});*/
+});
+/*
+Cypress.lifecycle({
+    clearApp: true, // leave this on
+    clearInternals: true, // leave this on
+    clearCookies: false, // nope
+    clearLocalStorage: false, // nope
+    clearSessionStorage: false // nope
+});
 
+*/
+
+Cypress.Cookies.defaults({
+  whitelist: 'MICROPSESSID'
+})
 
 let LOCAL_STORAGE_MEMORY = {};
 
 Cypress.Commands.add("saveLocalStorageCache", () => {
     Object.keys(localStorage).forEach(key => {
-        cy.log(`saving key => ${key}`)
-        cy.log(`with value => ${localStorage[key]}`)
+      cy.log(`saving key => ${key}`)
+      cy.log(`with value => ${localStorage[key]}`)
       LOCAL_STORAGE_MEMORY[key] = localStorage[key];
     });
   });
 
 Cypress.Commands.add("restoreLocalStorageCache", () => {
     Object.keys(LOCAL_STORAGE_MEMORY).forEach(key => {
-        cy.log(`restoring key => ${key}`)
-        cy.log(`with value => ${LOCAL_STORAGE_MEMORY[key]}`)
+      cy.log(`restoring key => ${key}`)
+      cy.log(`with value => ${LOCAL_STORAGE_MEMORY[key]}`)
       localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
     });
 });
