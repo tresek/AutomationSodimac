@@ -1,1 +1,12 @@
-{}
+{"reporter": "./node_modules/mochawesome/src/mochawesome.js",
+	"reporterOptions": {
+		"reportDir": "results",
+		"overwrite": false,
+		"html": true,
+		"json": false
+	},
+	"screenshotsFolder": "results/assets",
+	"env": {
+		"loginFixture": "cypress/fixtures/login.json"
+	}
+}

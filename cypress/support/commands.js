@@ -70,3 +70,7 @@ Cypress.Commands.add("restoreLocalStorageCache", () => {
       localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
     });
 });
+
+Cypress.Commands.add('writeResultFile', products => {
+  cy.writeFile('result.json', products);
+});
